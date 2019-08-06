@@ -8,6 +8,7 @@ import { BrowserRouter,Route} from 'react-router-dom'
 import store from './store'
 import Home from './pages/home'
 import Detail from './pages/detail'
+import User from './pages/usersetting/User'
 import 'antd/dist/antd.css'
 class App extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class App extends Component {
             <Login/>
             <Route path='/' exact component={Home}></Route>
             <Route path='/detail/:id' exact component={Detail}></Route>
+            <Route path='/userInfo' exact component={User}></Route>
         </div>
         </BrowserRouter>
         </Provider>

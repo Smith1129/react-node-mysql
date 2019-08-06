@@ -13,6 +13,7 @@ axios.interceptors.request.use(
         if(config.method == 'post'){
         }else if(config.method == 'get'){
             config.params ={
+                token:localStorage.getItem("token"),
                 ...config.params
             }
         }
@@ -26,11 +27,14 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
     response => {
-        if (response.data.Code === 200) {
+        if (response.data.Code === 200 || response.data.code=='success'||response.data.success==false) {
             return Promise.resolve(response);
         }else if(response.data.Code===111)
         {
             alert(response.data.Data.Msg)
+        }else if(response.data.Code === 333){
+            alert(response.data.Data.Msg)
+            return Promise.resolve(response);
         }
     },
     // 服务器状态码不是200的情况
@@ -42,7 +46,6 @@ axios.interceptors.response.use(
                 case 403:
                     break;
                 case 404:
-                    
                 break;
                 default:
             }

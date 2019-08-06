@@ -16,7 +16,8 @@ export const UserInfo = (data) => {
                         localStorage.setItem("token",res.Data.token)
                         const data = {
                             username:res.Data.username,
-                            name:res.Data.name
+                            name:res.Data.name,
+                            avatar:res.Data.avatar
                         }
                         dispatch({type:'setUserInfo',value:data})
                         // this.props.userInfo(data)

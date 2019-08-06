@@ -22,7 +22,8 @@ router.get('/api/user', function (req, res) {
         Data:{
           token:data,
           username:results[0].username,
-          name:results[0].name
+          name:results[0].name,
+          avatar:results[0].avatar,
         }
       }
   }

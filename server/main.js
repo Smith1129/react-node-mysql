@@ -9,11 +9,13 @@ var userInfo = require('./route/user');
 var register = require('./route/register');
 var searchList = require('./route/searchList');
 var homeList = require('./route/homeList');
+var resetInfo = require('./route/resetInfo');
 
 app.use('/', userInfo);
 app.use('/',register)
 app.use('/',searchList)
 app.use('/',homeList)
+app.use('/',resetInfo)
 
 app.all('*',function(req,res,next){
   res.header("Access-Control-Allow-Origin", "*");

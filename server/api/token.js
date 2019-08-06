@@ -1,13 +1,15 @@
 var jwt = require("jsonwebtoken");
 exports.checkToken = function(token){
-    let secretOrPrivateKey="zzz" 
+    let secretOrPrivateKey="zzz"
+    let result = ''
      jwt.verify(token,secretOrPrivateKey,function(err, decoded){
       if(!err){
-          return decoded.token
+          result =  decoded.token
       }else{
-        return 'n'
+       result = 'n'
       }
     })
+    return result
 }
 exports.setToken = function(val){
       let secretOrPrivateKey="zzz"

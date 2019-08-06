@@ -140,12 +140,19 @@ export const Addtion = styled.div`
     right:40px;
     top:0;
     height:56px
-    .name{
-        font-size:18px;
-        line-height:55px;
-        color:#DC143C;
+    // .name{
+    //     font-size:18px;
+    //     line-height:55px;
+    //     color:#DC143C;
+    //     display:inline-block;
+    //     margin-right:15px;
+    // }
+    img{
         display:inline-block;
-        margin-right:15px;
+        width:101px;
+        height:42px;
+        margin-right:6px;
+        margin-top:7px;
     }
 `;
 export const Button = styled.div`

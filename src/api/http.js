@@ -7,3 +7,7 @@ export const register = data => get('api/register',data)
 export const searchList = data => get('api/searchList',data)
 //homeList
 export const homeList = data => get('api/homeList',data)
+//上传头像
+export const uploadAvatar = data => get('api/infoReset',data)
+//修改name
+export const updateName = data => get('api/infoReset',data)

@@ -4,9 +4,27 @@ import { CSSTransition } from "react-transition-group";
 import { connect } from 'react-redux'
 import {actionCreators} from './store'
 import {Link} from 'react-router-dom'
-import loginReducer from '../login/store/reducer'
 import  * as actionCreators1 from '../login/store/actionCreators'
-// import {}
+import { Menu, Dropdown } from 'antd'
+const menu = (
+    <Menu>
+      <Menu.Item>
+      <Link to='/userInfo'>
+          设置
+      </Link>
+      </Menu.Item>
+      {/* <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+          2nd menu item
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+          3rd menu item
+        </a>
+      </Menu.Item> */}
+    </Menu>
+  );
 class Header extends Component{
     render() {
         return(
@@ -39,11 +57,16 @@ class Header extends Component{
                     <Button className='writting'>
                         <span className="iconfont">&#xe615;</span>
                         写文章</Button>
-                    {this.props.userInfo?(<span className={'name'}>{this.props.userInfo.name}</span>):(<Button className='reg'>注册</Button>)}
+                       
+                        {/* <span onMouseEnter={this.getInfoList} className={'name'}>{this.props.userInfo.name}</span> */}
+                    {this.props.userInfo?( <Dropdown overlay={menu} placement="bottomLeft">
+                            <img src={this.props.userInfo.avatar}></img>
+                        </Dropdown>):(<Button className='reg'>注册</Button>)}
                 </Addtion>
             </HeaderWrapper>
         )
     }
+   
     getListArea(show)
     {
      const pageList = []
