@@ -149,7 +149,7 @@ export const Addtion = styled.div`
     // }
     img{
         display:inline-block;
-        width:101px;
+        width:71px;
         height:42px;
         margin-right:6px;
         margin-top:7px;
@@ -166,6 +166,7 @@ export const Button = styled.div`
     border:1px solid #ec6149;
     &.reg {
         color:#ec6149;
+        cursor:pointer;
     }
     &.writting{
         color:#fff;
@@ -173,10 +174,5 @@ export const Button = styled.div`
     }
     
 `;
-// export const LoginInfo = styled.span`
-//     font-size:13px;
-//     // position:absolute;
-//     // right:417px;
-//     // top:16px;
-// `
+
 

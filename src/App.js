@@ -9,6 +9,7 @@ import store from './store'
 import Home from './pages/home'
 import Detail from './pages/detail'
 import User from './pages/usersetting/User'
+import Article from './pages/article/index'
 import 'antd/dist/antd.css'
 class App extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path='/' exact component={Home}></Route>
             <Route path='/detail/:id' exact component={Detail}></Route>
             <Route path='/userInfo' exact component={User}></Route>
+            <Route path='/article' exact component={Article}></Route>
         </div>
         </BrowserRouter>
         </Provider>
@@ -36,6 +38,7 @@ class App extends Component {
         )
     }
 }
+
 
 export default App
 

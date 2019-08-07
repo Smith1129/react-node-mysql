@@ -8,9 +8,9 @@ router.get('/api/register', function (req, res) {
     let name = req.query.name
     mysql.connect('SELECT * from user where username=?',[username],function (results) {
       let response
-      console.log(results.length)
+      const avatar = 'https://i.loli.net/2019/08/07/cIJNVyRPlBTjhEd.jpg'
       if(results.length==0){
-            mysql.connect('INSERT into user set username=? , pass =?,name=?',[username,pass,name],function (results) {
+            mysql.connect('INSERT into user set username=? , pass =?,name=?,avatar=?',[username,pass,name,avatar],function (results) {
               const data = {
                 Code:200,
                 Data:{

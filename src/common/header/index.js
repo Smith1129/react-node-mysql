@@ -35,7 +35,7 @@ class Header extends Component{
                 <Nav>
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载APP</NavItem>
-                    {this.props.userInfo?null:<NavItem className='right' onClick={()=>{this.props.getLogin()}}>登录</NavItem>}
+                    {this.props.userInfo?null:<NavItem className='right' onClick={()=>{this.props.getLogin(1)}}>登录</NavItem>}
                     {/* <NavItem className='right' onClick={()=>{this.props.getLogin()}}>登录</NavItem> */}
                     <NavItem className='right'>
                         <span className="iconfont">&#xe636;</span>
@@ -54,14 +54,15 @@ class Header extends Component{
                 </Nav>
                 <Addtion>
                     {/* xiewenzhang */}
-                    <Button className='writting'>
-                        <span className="iconfont">&#xe615;</span>
-                        写文章</Button>
-                       
+                    <Link to='/article'>
+                        <Button className='writting'>
+                            <span className="iconfont">&#xe615;</span>
+                            写文章</Button>
+                    </Link>
                         {/* <span onMouseEnter={this.getInfoList} className={'name'}>{this.props.userInfo.name}</span> */}
                     {this.props.userInfo?( <Dropdown overlay={menu} placement="bottomLeft">
                             <img src={this.props.userInfo.avatar}></img>
-                        </Dropdown>):(<Button className='reg'>注册</Button>)}
+                        </Dropdown>):(<Button onClick={()=>{this.props.getLogin(2)}} className='reg'>注册</Button>)}
                 </Addtion>
             </HeaderWrapper>
         )
@@ -116,8 +117,14 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
     return{
-        getLogin(){
-            dispatch(actionCreators1.loginShow(true))
+        getLogin(index){
+            if(index==1){
+                dispatch(actionCreators1.loginShow(true))
+            }
+            if(index==2){
+                dispatch(actionCreators1.loginShow(true))
+                dispatch(actionCreators1.registerShow(true))
+            }
         },
         handleInputSlide(list){
             dispatch(actionCreators.slideTrue())

@@ -5,6 +5,11 @@ export const loginShow = (data)=>{
                dispatch({ type:'loginshow',value:data})
         }
 }
+export const registerShow = (data) => {
+    return (dispatch) =>{
+        dispatch({ type:'registerShow',value:data})
+  }
+}
 export const UserInfo = (data) => {
         return(dispatch) => {
                 const payload = data
@@ -20,13 +25,12 @@ export const UserInfo = (data) => {
                             avatar:res.Data.avatar
                         }
                         dispatch({type:'setUserInfo',value:data})
-                        // this.props.userInfo(data)
                     }).catch(error => {
                         console.log('www'+error)
                         reject(error)
                     })
                 })
-                // dispatch({type:'setUserInfo',value:data})
+
         }
 }
 

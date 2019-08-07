@@ -9,8 +9,8 @@ class Login extends Component{
     constructor(props){
         super(props)
         this.state = {
-            isLogin:true,
-            isRegister:false,
+            // isLogin:true,
+            // isRegister:false,
             loginUsername:'',
             loginPass:'',
             registerUsername:'',
@@ -93,7 +93,7 @@ class Login extends Component{
 
     render() {
         if(this.props.isShow){
-            if(this.state.isLogin)
+            if(this.props.isLogin)
             {
                 return(
                     <AllContent>
@@ -120,7 +120,7 @@ class Login extends Component{
                     </AllContent>
                     // hello
                 )
-            }else if(this.state.isRegister){
+            }else if(this.props.isRegister){
                 return(
                     <AllContent>
                         <LoginWrapper>
@@ -158,24 +158,20 @@ class Login extends Component{
             )
         }
     }
+    
     getLogin(){
-        this.setState({
-            isLogin:true,
-            isRegister:false
-        })
+        this.props.showRegister(false)
     }
     getRegister(){
-        this.setState({
-            isLogin:false,
-            isRegister:true
-        })
+        this.props.showRegister(true)
     }
 }
 
 const mapStateToProps = (state) =>{            //state是指store里的数据
-    // console.log(state.login.show)
     return{
-        isShow:state.login.show      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+        isShow:state.login.show,     //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+        isLogin:state.login.isLogin,
+        isRegister:state.login.isRegister
     }
 }
 
@@ -186,6 +182,9 @@ const mapDispatchToProps = (dispatch) =>{
         },
         userInfo(data){
             dispatch(actionCreators.UserInfo(data))  
+        },
+        showRegister(value){
+            dispatch(actionCreators.registerShow(value))  
         }
     }
 }
