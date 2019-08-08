@@ -1,14 +1,15 @@
 
 import React,{Component} from 'react';
+import {connect} from 'react-redux'
 import ReactQuill,{ Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button ,Modal,message} from 'antd';
 import axios from 'axios'
-// import MYURL  from '../api/config';
+import {actionCreators} from './store'
 import { ImageDrop } from 'quill-image-drop-module';
 Quill.register('modules/imageDrop', ImageDrop);
 
-class Editer extends Component {
+class Article extends Component {
     constructor(props) {
         super(props)
         this.state = { text: '' } // You can also pass a Quill Delta here
@@ -19,9 +20,9 @@ class Editer extends Component {
         this.showUploadBox = this.showUploadBox.bind(this);
         this.hideUploadBox =this.hideUploadBox.bind(this);
         this.handleUpload =this.handleUpload.bind(this);
+        this.submit = this.submit.bind(this)
     }
     handleChange(value) {
-        console.log(value)
         this.setState({ text: value })
     };
     modules={//富文本配置
@@ -48,6 +49,13 @@ class Editer extends Component {
         },
         imageDrop: true,
     };
+    submit(){
+        if(this.state.text){
+            this.props.handleSubmit(this.state.text)
+        }else{
+            alert('文章内容不能为空！！')
+        }
+    }
     showUploadBox(){
         this.setState({
             uploadBoxVisible:true
@@ -102,39 +110,10 @@ class Editer extends Component {
                     if(res.data.code === 'success'){
                         this_.hideUploadBox();//隐藏弹框
                         this_.imageHandler(res.data.data.url);//处理插入图片到编辑器
-                        // const payload = {
-                        //     imgUrl:res.data.data.url,
-                        //     type:'upload'
-                        // }
-                        // return new Promise((reject,resolve)=>{
-                        //     uploadAvatar(payload).then((res)=>{
-                        //         this.setState({
-                        //             avatar:res.Data.imgUrl
-                        //         })
-                        //         message.success(` uploaded successfully`);
-                        //     }).catch(error=>{
-                        //         reject(error)
-                        //     })
-                        // })
                     }else{
                         alert('请勿重复上传！！！')
                     }
             })
-            // let fileServerAddr = MYURL.fileServer //服务器地址
-            // let file =this.state.file.name
-            // let size =this.state.file.size
-            // this.uploadForImage(fileServerAddr,file,size,function (response) {//回调函数处理进度和后端返回值
-            //     console.log('res----?>',response)
-            //     if ((response && response.status === 200) ||(response && response.status === "200")) {
-            //         message.success("上传成功！");
-            //         this_.hideUploadBox();//隐藏弹框
-            //         console.log("response.data.url???=>",response.data.url)
-            //         this_.imageHandler(response.data.url);//处理插入图片到编辑器
-            //     }else if (response && response.status !== 200) {
-            //         message.error(response.msg)
-            //     }
-            // },
-            // localStorage.getItem("access_token"));
         }
         
     };
@@ -148,6 +127,11 @@ class Editer extends Component {
         quill.setSelection(index + 1);//光标位置加1 
         console.log("quill.getSelection.======",quill.getSelection().index)
     };
+    componentDidMount(){
+        if(!this.props.userInfo){
+            this.props.getLoginPop()
+        }
+    }
     render() {
       return (
         // maxHeight:"500px"
@@ -181,9 +165,26 @@ class Editer extends Component {
                     </div>
                 </div>
             </Modal>
-            <div>提交</div>
+            <Button type="primary" onClick = {()=>{this.submit()}}>提交</Button>
         </div>
       )
     }
 };
-export default  Editer;
+const mapStateToProps = (state) =>{            //state是指store里的数据
+    return{
+        userInfo:state.login.userInfo      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        getLoginPop(){
+            dispatch({type:'loginshow',value:true})
+        },
+        handleSubmit(data){
+            dispatch(actionCreators.saveArticle(data))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Article)

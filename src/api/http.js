@@ -11,3 +11,5 @@ export const homeList = data => get('api/homeList',data)
 export const uploadAvatar = data => get('api/infoReset',data)
 //修改name
 export const updateName = data => get('api/infoReset',data)
+//保存文章
+export const articleSave = data => post('api/article',data)

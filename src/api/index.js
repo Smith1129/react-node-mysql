@@ -1,4 +1,4 @@
-import axios from 'axios';import QS from 'qs';
+import axios from 'axios';
 
 
 // 请求超时时间
@@ -11,13 +11,16 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.request.use(
     config => {
         if(config.method == 'post'){
+            config.params ={
+                token:localStorage.getItem("token"),
+                ...config.params
+            }
         }else if(config.method == 'get'){
             config.params ={
                 token:localStorage.getItem("token"),
                 ...config.params
             }
         }
-        
         return config;
     },
     error => {
@@ -78,12 +81,11 @@ export function get(url, params){
   */
 export function post(url, params) {
     return new Promise((resolve, reject) => {
-        axios.post(url, QS.stringify(params))
+        axios.post(url, params)
         .then(res => {
             resolve(res.data);
         })
         .catch(err => {
-            // reject(err.data)
         })
     });
 }
