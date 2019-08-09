@@ -66,11 +66,16 @@ export const ListItem = styled.div`
         color:#333;
     }
     .desc{
+        width:500px;
         font-size:13px;
         line-height:24px;
         color:#999;
         margin-top:15px;
-    }
+        word-break:break-all;
+        display:-webkit-box;
+        -webkit-line-clamp:2;
+        -webkit-box-orient:vertical;
+        overflow:hidden;
 `;
 export const ListInfo = styled.div`
     width:500px;

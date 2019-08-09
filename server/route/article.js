@@ -18,7 +18,8 @@ router.post('/api/article', function (req, res) {
       return
   }else {
     let content = req.body.content
-    mysql.connect('INSERT article set content=?,article_from=?',[content,tokenVerify],function (results) {
+    let title = req.body.title
+    mysql.connect('INSERT article set content=?,article_from=?,title=?',[content,tokenVerify,title],function (results) {
         let response
           response = {
             Code:200,

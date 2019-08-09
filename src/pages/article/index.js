@@ -7,12 +7,16 @@ import { Button ,Modal,message} from 'antd';
 import axios from 'axios'
 import {actionCreators} from './store'
 import { ImageDrop } from 'quill-image-drop-module';
+import {articleSave} from '../../api/http'
 Quill.register('modules/imageDrop', ImageDrop);
 
 class Article extends Component {
     constructor(props) {
         super(props)
-        this.state = { text: '' } // You can also pass a Quill Delta here
+        this.state = { text: '' ,
+        visible:false,
+        title:''
+    } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
         this.selectImage = this.selectImage.bind(this);
         this.changeImageBeforeUpload = this.changeImageBeforeUpload.bind(this);
@@ -21,6 +25,9 @@ class Article extends Component {
         this.hideUploadBox =this.hideUploadBox.bind(this);
         this.handleUpload =this.handleUpload.bind(this);
         this.submit = this.submit.bind(this)
+        this.handleOk = this.handleOk.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
+        this.titleChange = this.titleChange.bind(this)
     }
     handleChange(value) {
         this.setState({ text: value })
@@ -51,7 +58,10 @@ class Article extends Component {
     };
     submit(){
         if(this.state.text){
-            this.props.handleSubmit(this.state.text)
+            // this.props.handleSubmit(this.state.text)
+            this.setState({
+                visible:true
+            })
         }else{
             alert('文章内容不能为空！！')
         }
@@ -132,6 +142,38 @@ class Article extends Component {
             this.props.getLoginPop()
         }
     }
+    titleChange(e){
+        this.setState({
+            title:e.target.value
+        })
+    }
+    handleOk(){
+        if(this.state.title){
+            this.handleSubmit(this.state.text,this.state.title)
+        }else{
+            message.error('请输入文章标题!!!!!!')
+        }
+    }
+    handleCancel(){
+        console.log(2222)
+        this.setState({
+            visible: false,
+          });
+    }
+    handleSubmit(content,title){
+        const payload = {content:content,title:title}
+            return new Promise((reject,resolve)=>{
+                    articleSave(payload).then((res)=>{
+                        //      this.setState({
+                        //         visible:false
+                        // })
+                        message.success('发布文章成功!!!!')
+                        this.props.history.push('/')
+                    }).catch(error=>{
+                            reject(error)
+                    })
+            })
+    }
     render() {
       return (
         // maxHeight:"500px"
@@ -166,6 +208,14 @@ class Article extends Component {
                 </div>
             </Modal>
             <Button type="primary" onClick = {()=>{this.submit()}}>提交</Button>
+                    <Modal
+                        title="请输入文章标题"
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        >
+                       <input value={this.state.title} onChange={(e)=>this.titleChange(e)}></input>
+                </Modal>
         </div>
       )
     }
@@ -180,9 +230,6 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         getLoginPop(){
             dispatch({type:'loginshow',value:true})
-        },
-        handleSubmit(data){
-            dispatch(actionCreators.saveArticle(data))
         }
     }
 }
