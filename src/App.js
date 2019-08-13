@@ -11,6 +11,7 @@ import Detail from './pages/detail'
 import User from './pages/usersetting/User'
 import Article from './pages/article/index'
 import 'antd/dist/antd.css'
+
 class App extends Component {
     constructor(props) {
         super(props)
