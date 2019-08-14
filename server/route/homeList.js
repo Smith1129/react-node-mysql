@@ -3,9 +3,8 @@ var router  = express.Router();
 var mysql   = require('./../mysql/connect');
 
 router.get('/api/homeList', function (req, res) {
-    mysql.connect('SELECT * from user',[],function (results) {
+    mysql.connect('SELECT * from article',[],function (results) {
       let response
-      console.log(results.length)
       response = {
           Code:200,
           Data:{

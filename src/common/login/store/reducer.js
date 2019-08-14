@@ -1,4 +1,4 @@
-import * as Constants from './constants'
+
 const defaultState = {
     show:false,
     userInfo:'',

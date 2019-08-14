@@ -10,12 +10,12 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // 请求拦截器
 axios.interceptors.request.use(
     config => {
-        if(config.method == 'post'){
+        if(config.method === 'post'){
             config.params ={
                 token:localStorage.getItem("token"),
                 ...config.params
             }
-        }else if(config.method == 'get'){
+        }else if(config.method === 'get'){
             config.params ={
                 token:localStorage.getItem("token"),
                 ...config.params
@@ -30,7 +30,7 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
     response => {
-        if (response.data.Code === 200 || response.data.code=='success'||response.data.success==false) {
+        if (response.data.Code === 200 || response.data.code==='success'||response.data.success===false) {
             return Promise.resolve(response);
         }else if(response.data.Code===111)
         {

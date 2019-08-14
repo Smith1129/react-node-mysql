@@ -1,5 +1,5 @@
 
-import {loginInfo,register} from '../../../api/http'
+import {loginInfo} from '../../../api/http'
 export const loginShow = (data)=>{
         return (dispatch) =>{
                dispatch({ type:'loginshow',value:data})
@@ -26,7 +26,6 @@ export const UserInfo = (data) => {
                         }
                         dispatch({type:'setUserInfo',value:data})
                     }).catch(error => {
-                        console.log('www'+error)
                         reject(error)
                     })
                 })

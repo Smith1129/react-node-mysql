@@ -27,7 +27,6 @@ export const loadMore = () =>{
                 axios.get('/api/homeList.json').then((res) => {
                         dispatch(loadMoreList(res.data.data))
                 }).catch(()=>{
-                        console.log('error')
                 })
         }
 }

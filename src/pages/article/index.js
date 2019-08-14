@@ -3,9 +3,9 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux'
 import ReactQuill,{ Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Button ,Modal,message} from 'antd';
+import { Button ,Modal,message,Upload,Icon} from 'antd';
 import axios from 'axios'
-import {actionCreators} from './store'
+import {ArticleContent, ImgContent, DescContent} from './style'
 import { ImageDrop } from 'quill-image-drop-module';
 import {articleSave} from '../../api/http'
 Quill.register('modules/imageDrop', ImageDrop);
@@ -15,7 +15,10 @@ class Article extends Component {
         super(props)
         this.state = { text: '' ,
         visible:false,
-        title:''
+        title:'',
+        desc:'',
+        descImg:'',
+        formData:''
     } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
         this.selectImage = this.selectImage.bind(this);
@@ -28,6 +31,9 @@ class Article extends Component {
         this.handleOk = this.handleOk.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
         this.titleChange = this.titleChange.bind(this)
+        this.handleDescChange = this.handleDescChange.bind(this)
+        this.handleUploadBefore = this.handleUploadBefore.bind(this)
+        this.customRequest = this.customRequest.bind(this)
     }
     handleChange(value) {
         this.setState({ text: value })
@@ -102,7 +108,6 @@ class Article extends Component {
             src:src,
             file:file
         })
-        console.log('eeeeeee',window)
     }
     /*3.开始上传图片*/
     handleUpload(){      
@@ -111,12 +116,9 @@ class Article extends Component {
         if(!this.state.file){
             alert('请选择图片！！')
         }else{
-            console.log(1000)
-            console.log(this.state)
             const formdata =  new FormData()
             formdata.append('smfile', this.state.file);
                 axios.post('https://sm.ms/api/upload',formdata).then((res) =>{
-                    console.log(res)
                     if(res.data.code === 'success'){
                         this_.hideUploadBox();//隐藏弹框
                         this_.imageHandler(res.data.data.url);//处理插入图片到编辑器
@@ -135,12 +137,11 @@ class Article extends Component {
         let index = range ? range.index : 0;
         quill.insertEmbed(index, "image",url, Quill.sources.USER);//插入图片
         quill.setSelection(index + 1);//光标位置加1 
-        console.log("quill.getSelection.======",quill.getSelection().index)
     };
     componentDidMount(){
-        if(!this.props.userInfo){
-            this.props.getLoginPop()
-        }
+        // if(!this.props.userInfo){
+        //     this.props.getLoginPop()
+        // }
     }
     titleChange(e){
         this.setState({
@@ -149,30 +150,72 @@ class Article extends Component {
     }
     handleOk(){
         if(this.state.title){
-            this.handleSubmit(this.state.text,this.state.title)
+            if(this.state.descImg){
+                if(this.state.desc){
+                     this.handleSubmit(this.state.text,this.state.title,this.state.descImg,this.state.desc)
+                }else{
+                    message.error('请输入文章描述!!!!!!')
+                }
+
+            }else{
+                message.error('请上传文章描述图!!!!!!')
+            }
         }else{
             message.error('请输入文章标题!!!!!!')
         }
     }
     handleCancel(){
-        console.log(2222)
         this.setState({
             visible: false,
           });
     }
-    handleSubmit(content,title){
-        const payload = {content:content,title:title}
+    handleDescChange(e){
+        this.setState({
+            desc:e.target.value
+        })
+    }
+    handleSubmit(content,title,descImg,desc){
+        const payload = {content:content,title:title,descImg:descImg,desc:desc}
             return new Promise((reject,resolve)=>{
                     articleSave(payload).then((res)=>{
-                        //      this.setState({
-                        //         visible:false
-                        // })
                         message.success('发布文章成功!!!!')
                         this.props.history.push('/')
                     }).catch(error=>{
                             reject(error)
                     })
             })
+    }
+    
+    handleUploadBefore(e){
+        if(e.type.indexOf("image/") === -1){
+            alert('请选择正确的图片格式')
+            return false
+        }else{
+            const  isLt2M = e.size / 1024 / 1024 < 2
+            if(!isLt2M){
+                alert('上传图片大小不能超过2MB')
+                return false
+            }
+            this.setState({
+                formData:e
+            })
+            return true
+        }
+    }
+    customRequest(){
+        const formdata =  new FormData()
+        formdata.append('smfile', this.state.formData);
+            axios.post('https://sm.ms/api/upload',formdata).then((res) =>{
+                if(res.data.code === 'success'){
+                    this.setState({
+                        descImg:res.data.data.url
+                    })
+                    // message.success(` uploaded successfully`);
+                }else{
+                    alert('请勿重复上传！！！')
+                }
+            })
+
     }
     render() {
       return (
@@ -188,7 +231,7 @@ class Article extends Component {
                 maskClosable={false}
                 width={500}
                 >
-                <div className="ImagaBox" >
+                <div className={'ImagaBox'} >
                     <div>
                         <Button onClick={this.selectImage.bind(this)} style={{background:"#18ade4",border:"none",color:"#fff"}}>
                             选择图片
@@ -208,13 +251,32 @@ class Article extends Component {
                 </div>
             </Modal>
             <Button type="primary" onClick = {()=>{this.submit()}}>提交</Button>
-                    <Modal
-                        title="请输入文章标题"
+                <Modal
+                        title="请输入文章展示标题、缩略图、描述等"
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                         >
-                       <input value={this.state.title} onChange={(e)=>this.titleChange(e)}></input>
+                       <ArticleContent>
+                            标题：<input value={this.state.title} onChange={(e)=>this.titleChange(e)}></input>
+                            <ImgContent>
+                                <span>描述图：</span>
+                                    <Upload  beforeUpload={this.handleUploadBefore}
+                                        customRequest={this.customRequest}
+                                        className={'uploadImg'}
+                                    >
+                                        <Button className={'upload'}>
+                                        <Icon type="upload" /> 上传图片
+                                        </Button>
+                                    </Upload>
+                                    {this.state.descImg?(<img src={this.state.descImg} alt=''></img>):null}
+                            </ImgContent>
+                            <DescContent>
+                                <span>文章描述：</span>
+                                <textarea rows="3" cols="20" value={this.state.desc} onChange={(e)=>{this.handleDescChange(e)}}>
+                                </textarea>
+                            </DescContent>
+                        </ArticleContent>
                 </Modal>
         </div>
       )

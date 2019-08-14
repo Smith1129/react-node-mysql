@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import {UserHomeWrapper,Name} from './style'
 import {connect} from 'react-redux'
-import { Upload, message, Button, Icon, Form } from 'antd'
+import { Upload, message, Button, Icon} from 'antd'
 import axios from 'axios'
 import {uploadAvatar,updateName} from '../../api/http'
 class User extends Component{
@@ -12,7 +12,7 @@ class User extends Component{
             name:'',
             avatar:''
         }
-        this.handleChange = this.handleChange.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
         this.customRequest = this.customRequest.bind(this)
         this.handleUploadBefore = this.handleUploadBefore.bind(this)
         this.handleName = this.handleName.bind(this)
@@ -23,8 +23,8 @@ class User extends Component{
         {
             return(
                 <UserHomeWrapper>
-                    <img src={this.state.avatar}></img>
-                    <Upload onChange = {this.handleChange} beforeUpload={this.handleUploadBefore}
+                    <img src={this.state.avatar} alt=''></img>
+                    <Upload  beforeUpload={this.handleUploadBefore}
                         customRequest={this.customRequest}
                     >
                         <Button className={'upload'}>
@@ -66,11 +66,8 @@ class User extends Component{
         name:e.target.value
        })
     }
-    handleChange(e){
-        // console.log(e)
-    }
     handleUploadBefore(e){
-        if(e.type.indexOf("image/") == -1){
+        if(e.type.indexOf("image/") === -1){
             alert('请选择正确的图片格式')
             return false
         }else{
@@ -90,7 +87,6 @@ class User extends Component{
         const formdata =  new FormData()
         formdata.append('smfile', this.state.formData);
             axios.post('https://sm.ms/api/upload',formdata).then((res) =>{
-                console.log(res)
                 if(res.data.code === 'success'){
                     const payload = {
                         imgUrl:res.data.data.url,

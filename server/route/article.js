@@ -5,7 +5,6 @@ var tokenCheck = require('./../api/token');
 
 router.post('/api/article', function (req, res) {
   let token =req.query.token
-  console.log(req.body.content)
   const tokenVerify = tokenCheck.checkToken(token)
   if(tokenVerify === 'n' || tokenVerify==''){
       const result = {
@@ -19,7 +18,9 @@ router.post('/api/article', function (req, res) {
   }else {
     let content = req.body.content
     let title = req.body.title
-    mysql.connect('INSERT article set content=?,article_from=?,title=?',[content,tokenVerify,title],function (results) {
+    let descImg = req.body.descImg
+    let desc = req.body.descImg
+    mysql.connect('INSERT article set content=?,article_from=?,title=?,descImg=?,desc=?',[content,tokenVerify,title,descImg,desc],function (results) {
         let response
           response = {
             Code:200,

@@ -2,9 +2,8 @@ import React,{ Component } from 'react'
 import {LoginWrapper,AllContent,TitleContent,LoginUsername,LoginPass,LoginBtn} from "./style";
 import {connect} from 'react-redux'
 import {Button,Avatar,Input } from 'antd'
-import {loginInfo,register} from '../../api/http'
+import {register} from '../../api/http'
 import {actionCreators} from './store'
-import { userInfo } from 'os';
 class Login extends Component{
     constructor(props){
         super(props)

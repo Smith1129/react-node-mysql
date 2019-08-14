@@ -1,6 +1,5 @@
 import {constants} from './index'
 import {searchList} from '../../../api/http'
-import { resolve } from 'url';
 export const slideTrue = () =>({
         type:constants.SEARCH_FOCUS
 })
@@ -15,18 +14,13 @@ export const changeList = (data)=>({
 })
 export const getSearchList = ()=>{
         return (dispatch)=> {
-                return new Promise((reject,resolve)=>{
+                return new Promise((reject)=>{
                   searchList().then((res)=>{
                         dispatch(changeList(res.Data.List))
                   }).catch(error => {
                         reject(error)
                 })
              })
-                // axios.get('/api/headerList.json').then((res) => {
-                //         dispatch(changeList(res.data))
-                // }).catch(()=>{
-                //         console.log('error')
-                // })
         }
 }
 export const mouseInTrue = ()=>{

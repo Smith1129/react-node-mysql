@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addtion,Button,SearchWrapper,SearchInfo,SearchInfoTitle,SearchInfoSwitch,SearchInfoItem,SearchInfoList,LoginInfo} from './style'
+import {HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addtion,Button,SearchWrapper,SearchInfo,SearchInfoTitle,SearchInfoSwitch,SearchInfoItem,SearchInfoList} from './style'
 import { CSSTransition } from "react-transition-group";
 import { connect } from 'react-redux'
 import {actionCreators} from './store'
@@ -13,16 +13,6 @@ const menu = (
           设置
       </Link>
       </Menu.Item>
-      {/* <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-          2nd menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-          3rd menu item
-        </a>
-      </Menu.Item> */}
     </Menu>
   );
 class Header extends Component{
@@ -61,7 +51,7 @@ class Header extends Component{
                     </Link>
                         {/* <span onMouseEnter={this.getInfoList} className={'name'}>{this.props.userInfo.name}</span> */}
                     {this.props.userInfo?( <Dropdown overlay={menu} placement="bottomLeft">
-                            <img src={this.props.userInfo.avatar}></img>
+                            <img src={this.props.userInfo.avatar} alt=''></img>
                         </Dropdown>):(<Button onClick={()=>{this.props.getLogin(2)}} className='reg'>注册</Button>)}
                 </Addtion>
             </HeaderWrapper>
@@ -118,10 +108,10 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         getLogin(index){
-            if(index==1){
+            if(index===1){
                 dispatch(actionCreators1.loginShow(true))
             }
-            if(index==2){
+            if(index===2){
                 dispatch(actionCreators1.loginShow(true))
                 dispatch(actionCreators1.registerShow(true))
             }
