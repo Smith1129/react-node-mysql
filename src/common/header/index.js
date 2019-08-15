@@ -16,12 +16,7 @@ const menu = (
     </Menu>
   );
 class Header extends Component{
-    // constructor(props){
-    //     super(props)
-    //     this.handleWrite = this.handleWrite.bind(this)
-    // }
     render() {
-        console.log(this.props)
         return(
             <HeaderWrapper>
                 <Link to='/'>

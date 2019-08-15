@@ -10,9 +10,13 @@ router.get('/api/homeList', function (req, res) {
           id:item.id,
           desc:item.desccontent,
           title:item.title,
-          imgUrl:item.descImg
+          imgUrl:item.descImg,
+          articleLike:item.like,
+          articleUp:item.vote,
+          articleComment:item.comment
         })
       })
+      console.log(arr)
       let response
       response = {
           Code:200,

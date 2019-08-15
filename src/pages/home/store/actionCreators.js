@@ -10,15 +10,18 @@ export const getHomeList = ()=>{
                         reject(error)
                     })
                 })
-                
         }
 }
+
 const initTHomeList = (data)=>{
         return{
                 type:constants.GET_HOMEDATA,
                 value:data.topicList,
                 ArticleList:data.articleList,
-                recommendList:data.recommendList
+                recommendList:data.recommendList,
+                articleLike:data.articleLike,
+                articleUp:data.articleUp,
+                articleComment:data.articleComment
         }
 }
 

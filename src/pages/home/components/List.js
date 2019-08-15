@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 
 class List extends Component{
     render() {
+        console.log(this.props)
         return(
         <div>
             {this.props.articleList.map((item,index)=>{
@@ -16,13 +17,16 @@ class List extends Component{
                         <ListInfo>
                             <h3 className='title'>{item.title}</h3>
                             <p className='desc'>{item.desc}</p>
-                            <span className="iconfont">&#xe602;</span>
-                            <span className="iconfont">&#xe623;</span>
-                            <span className="iconfont">&#xe626;</span>
+                            {/* {item.articleUp?(<span className="iconfont">&#xe682;<em>{item.articleUp}</em></span>):(<span className="iconfont">&#xe682;<em>0</em></span>)} */}
+                            
+                            {/* <span className="iconfont">&#xe682;</span> */}
+                            {/* &#xe627; */}
+                            <span className="iconfont">&#xe61d;</span>
+                            {/* &#xe608; */}
+                            <span className="iconfont">&#xe618;</span>
                         </ListInfo>
                     </ListItem>
-                    </Link>
-
+                     </Link>
                 )
             })}
             <LoadMore onClick={this.props.handleLoadMore}>更多文字</LoadMore>
@@ -32,7 +36,7 @@ class List extends Component{
 }
 const mapStateToProps = (state) =>{            //state是指store里的数据
     return{
-        articleList:state.home.ArticleList      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+        articleList:state.home.ArticleList,      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
     }
 }
 

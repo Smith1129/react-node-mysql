@@ -37,24 +37,4 @@ export default (state = defaultState,action) => {
         return state
 
     }
-    // if(action.type === Constants.SEARCH_FOCUS)
-    // {
-    //     return {
-    //         focused:true,
-    //         list:[]
-    //     }
-    // }
-    // if(action.type === Constants.SEARCH_BLUR)
-    // {
-    //     return {
-    //         focused:false
-    //     }
-    // }
-    // if(action.type === Constants.CHANGE_LIST)
-    // {
-    //     const newState = JSON.parse(JSON.stringify(state))
-    //     newState.list = action.value
-    //     return newState
-    // }
-    // return state
 }
