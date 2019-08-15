@@ -16,7 +16,12 @@ const menu = (
     </Menu>
   );
 class Header extends Component{
+    // constructor(props){
+    //     super(props)
+    //     this.handleWrite = this.handleWrite.bind(this)
+    // }
     render() {
+        console.log(this.props)
         return(
             <HeaderWrapper>
                 <Link to='/'>
@@ -57,6 +62,7 @@ class Header extends Component{
             </HeaderWrapper>
         )
     }
+    
    
     getListArea(show)
     {
@@ -92,7 +98,6 @@ class Header extends Component{
             return null
         }
     }
-
 }
 
 const mapStateToProps = (state) =>{
@@ -150,4 +155,5 @@ const mapDispatchToProps = (dispatch) =>{
         }
     }
 }
+
 export default connect(mapStateToProps,mapDispatchToProps)(Header)

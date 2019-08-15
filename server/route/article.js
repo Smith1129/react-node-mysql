@@ -19,8 +19,8 @@ router.post('/api/article', function (req, res) {
     let content = req.body.content
     let title = req.body.title
     let descImg = req.body.descImg
-    let desc = req.body.descImg
-    mysql.connect('INSERT article set content=?,article_from=?,title=?,descImg=?,desc=?',[content,tokenVerify,title,descImg,desc],function (results) {
+    let desc = req.body.desc
+    mysql.connect('INSERT article set content=?,article_from=?,title=?,descImg=?,desccontent=?',[content,tokenVerify,title,descImg,desc],function (results) {
         let response
           response = {
             Code:200,
@@ -28,7 +28,6 @@ router.post('/api/article', function (req, res) {
               Msg:'保存成功',
             }
           }
-    
          res.send(response);
       });
 

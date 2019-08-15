@@ -6,10 +6,7 @@ import Login from './common/login/index'
 import { Provider } from 'react-redux'
 import { BrowserRouter,Route} from 'react-router-dom'
 import store from './store'
-import Home from './pages/home'
-import Detail from './pages/detail'
-import User from './pages/usersetting/User'
-import Article from './pages/article/index'
+import routers from './router/router.js'
 import 'antd/dist/antd.css'
 
 class App extends Component {
@@ -23,10 +20,13 @@ class App extends Component {
         <div>
             <Header/>
             <Login/>
-            <Route path='/' exact component={Home}></Route>
-            <Route path='/detail/:id' exact component={Detail}></Route>
-            <Route path='/userInfo' exact component={User}></Route>
-            <Route path='/article' exact component={Article}></Route>
+            {
+                routers.map((router,index)=>{
+                    return(
+                        <Route key={index} path={router.path} exact={router.exact} component={router.component} />
+                    )
+                })
+            }
         </div>
         </BrowserRouter>
         </Provider>

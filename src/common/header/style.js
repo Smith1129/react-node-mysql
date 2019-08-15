@@ -171,6 +171,7 @@ export const Button = styled.div`
     &.writting{
         color:#fff;
         background:#ec6149;
+        cursor:pointer;
     }
     
 `;

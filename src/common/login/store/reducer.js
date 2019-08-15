@@ -11,6 +11,8 @@ export default (state = defaultState,action) => {
         case 'loginshow':
             const newState1 = JSON.parse(JSON.stringify(state));
             newState1.show = action.value
+            newState1.isLogin = true
+            newState1.isRegister = false
             return newState1
         case 'setUserInfo':
             const userInfoState = JSON.parse(JSON.stringify(state))

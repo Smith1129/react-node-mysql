@@ -138,11 +138,11 @@ class Article extends Component {
         quill.insertEmbed(index, "image",url, Quill.sources.USER);//插入图片
         quill.setSelection(index + 1);//光标位置加1 
     };
-    componentDidMount(){
-        // if(!this.props.userInfo){
-        //     this.props.getLoginPop()
-        // }
-    }
+    // componentDidMount(){
+    //     if(!this.props.userInfo){
+    //         this.props.getLoginPop()
+    //     }
+    // }
     titleChange(e){
         this.setState({
             title:e.target.value
@@ -218,6 +218,10 @@ class Article extends Component {
 
     }
     render() {
+        if(!this.props.userInfo){
+            return null
+        }else{
+
       return (
         // maxHeight:"500px"
         <div>
@@ -281,6 +285,7 @@ class Article extends Component {
         </div>
       )
     }
+}
 };
 const mapStateToProps = (state) =>{            //state是指store里的数据
     return{
