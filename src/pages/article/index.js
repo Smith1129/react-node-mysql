@@ -138,11 +138,6 @@ class Article extends Component {
         quill.insertEmbed(index, "image",url, Quill.sources.USER);//插入图片
         quill.setSelection(index + 1);//光标位置加1 
     };
-    // componentDidMount(){
-    //     if(!this.props.userInfo){
-    //         this.props.getLoginPop()
-    //     }
-    // }
     titleChange(e){
         this.setState({
             title:e.target.value
@@ -219,71 +214,71 @@ class Article extends Component {
     }
     render() {
         if(!this.props.userInfo){
+            this.props.getLoginPop()
             return null
         }else{
-
-      return (
-        // maxHeight:"500px"
-        <div>
-            <ReactQuill id="ddd"  ref={(el) =>{this.reactQuillRef = el}} value={this.state.text} onChange={this.handleChange}
-                theme={"snow"}  modules={this.modules} />
-            <Modal
-                title="上传图片"
-                visible={this.state.uploadBoxVisible}
-                onCancel={this.hideUploadBox}
-                onOk={ this.handleUpload }
-                maskClosable={false}
-                width={500}
-                >
-                <div className={'ImagaBox'} >
-                    <div>
-                        <Button onClick={this.selectImage.bind(this)} style={{background:"#18ade4",border:"none",color:"#fff"}}>
-                            选择图片
-                        </Button>
-                        <input ref="uploadInput" type='file' accept='image/*'
-                            style={{width:"100px",border:"none",visibility:"hidden"}}
-                            onChange={this.changeImageBeforeUpload.bind(this)}
-                        />
-                    </div>
-                    <div style={{textAlign:"center",margin:"10px 0"}}>
-                        {this.state.src?
-                            <img src={this.state.src} alt="" style={{maxWidth:"100%",height:"300px"}}/>
-                            :
-                            <div style={{background:"#f2f2f2",width:"100%",height:"300px"}}></div>
-                        }
-                    </div>
-                </div>
-            </Modal>
-            <Button type="primary" onClick = {()=>{this.submit()}}>提交</Button>
-                <Modal
-                        title="请输入文章展示标题、缩略图、描述等"
-                        visible={this.state.visible}
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
+            return (
+                // maxHeight:"500px"
+                <div>
+                    <ReactQuill id="ddd"  ref={(el) =>{this.reactQuillRef = el}} value={this.state.text} onChange={this.handleChange}
+                        theme={"snow"}  modules={this.modules} />
+                    <Modal
+                        title="上传图片"
+                        visible={this.state.uploadBoxVisible}
+                        onCancel={this.hideUploadBox}
+                        onOk={ this.handleUpload }
+                        maskClosable={false}
+                        width={500}
                         >
-                       <ArticleContent>
-                            标题：<input value={this.state.title} onChange={(e)=>this.titleChange(e)}></input>
-                            <ImgContent>
-                                <span>描述图：</span>
-                                    <Upload  beforeUpload={this.handleUploadBefore}
-                                        customRequest={this.customRequest}
-                                        className={'uploadImg'}
-                                    >
-                                        <Button className={'upload'}>
-                                        <Icon type="upload" /> 上传图片
-                                        </Button>
-                                    </Upload>
-                                    {this.state.descImg?(<img src={this.state.descImg} alt=''></img>):null}
-                            </ImgContent>
-                            <DescContent>
-                                <span>文章描述：</span>
-                                <textarea rows="3" cols="20" value={this.state.desc} onChange={(e)=>{this.handleDescChange(e)}}>
-                                </textarea>
-                            </DescContent>
-                        </ArticleContent>
-                </Modal>
-        </div>
-      )
+                        <div className={'ImagaBox'} >
+                            <div>
+                                <Button onClick={this.selectImage.bind(this)} style={{background:"#18ade4",border:"none",color:"#fff"}}>
+                                    选择图片
+                                </Button>
+                                <input ref="uploadInput" type='file' accept='image/*'
+                                    style={{width:"100px",border:"none",visibility:"hidden"}}
+                                    onChange={this.changeImageBeforeUpload.bind(this)}
+                                />
+                            </div>
+                            <div style={{textAlign:"center",margin:"10px 0"}}>
+                                {this.state.src?
+                                    <img src={this.state.src} alt="" style={{maxWidth:"100%",height:"300px"}}/>
+                                    :
+                                    <div style={{background:"#f2f2f2",width:"100%",height:"300px"}}></div>
+                                }
+                            </div>
+                        </div>
+                    </Modal>
+                    <Button type="primary" onClick = {()=>{this.submit()}}>提交</Button>
+                        <Modal
+                                title="请输入文章展示标题、缩略图、描述等"
+                                visible={this.state.visible}
+                                onOk={this.handleOk}
+                                onCancel={this.handleCancel}
+                                >
+                            <ArticleContent>
+                                    标题：<input value={this.state.title} onChange={(e)=>this.titleChange(e)}></input>
+                                    <ImgContent>
+                                        <span>描述图：</span>
+                                            <Upload  beforeUpload={this.handleUploadBefore}
+                                                customRequest={this.customRequest}
+                                                className={'uploadImg'}
+                                            >
+                                                <Button className={'upload'}>
+                                                <Icon type="upload" /> 上传图片
+                                                </Button>
+                                            </Upload>
+                                            {this.state.descImg?(<img src={this.state.descImg} alt=''></img>):null}
+                                    </ImgContent>
+                                    <DescContent>
+                                        <span>文章描述：</span>
+                                        <textarea rows="3" cols="20" value={this.state.desc} onChange={(e)=>{this.handleDescChange(e)}}>
+                                        </textarea>
+                                    </DescContent>
+                                </ArticleContent>
+                        </Modal>
+                </div>
+            )
     }
 }
 };

@@ -84,6 +84,9 @@ export const ListInfo = styled.div`
         display:inline-block;
         margin-right:20px;
     }
+    .up{
+        color:red;
+    }
 `;
 export const RecommendWrapper = styled.div`
     margin:30px 0;

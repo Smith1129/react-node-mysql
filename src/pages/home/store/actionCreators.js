@@ -12,6 +12,17 @@ export const getHomeList = ()=>{
                 })
         }
 }
+export const getUpList = ()=>{
+        return (dispatch)=> {
+                return new Promise((reject,resolve)=>{
+                        homeList().then((res)=>{
+                      dispatch(initTHomeList(res.Data))
+                    }).catch(error => {
+                        reject(error)
+                    })
+                })
+        }
+}
 
 const initTHomeList = (data)=>{
         return{

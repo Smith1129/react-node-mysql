@@ -46,10 +46,11 @@ class Login extends Component{
                 return new Promise((reject,resolve)=>{
                     register(payload).then((res)=>{
                        alert('注册成功')
-                       this.setState({
-                        isLogin:true,
-                        isRegister:false
-                       })
+                       this.props.showRegister(false)
+                    //    this.setState({
+                    //     isLogin:true,
+                    //     isRegister:false
+                    //    })
                 }).catch(error => {
                     reject(error)
                 })

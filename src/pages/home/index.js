@@ -29,7 +29,7 @@ class Home extends Component{
         )
     }
     componentDidMount() {
-        this.props.getHomeData()
+        // this.props.getHomeData()
         this.bindEvents()
     }
     componentWillUnmount() {

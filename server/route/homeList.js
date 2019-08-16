@@ -4,7 +4,7 @@ var mysql   = require('./../mysql/connect');
 
 router.get('/api/homeList', function (req, res) {
     mysql.connect('SELECT * from article',[],function (results) {
-      console.log(results)
+      
       const arr = results.map((item)=>{
         return ({
           id:item.id,
@@ -16,7 +16,6 @@ router.get('/api/homeList', function (req, res) {
           articleComment:item.comment
         })
       })
-      console.log(arr)
       let response
       response = {
           Code:200,

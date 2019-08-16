@@ -13,3 +13,7 @@ export const uploadAvatar = data => get('api/infoReset',data)
 export const updateName = data => get('api/infoReset',data)
 //保存文章
 export const articleSave = data => post('api/article',data)
+//点赞收藏
+export const upOrlike = data => get('/api/upOrVote',data)
+//获取点赞List
+export const getUpList = data => get('/api/upList',data)
