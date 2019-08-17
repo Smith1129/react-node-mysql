@@ -17,6 +17,7 @@ const menu = (
   );
 class Header extends Component{
     render() {
+        console.log(this.props.userInfo)
         return(
             <HeaderWrapper>
                 <Link to='/'>
@@ -93,6 +94,9 @@ class Header extends Component{
             return null
         }
     }
+    componentDidMount(){
+        this.props.checkInfo()
+    }
 }
 
 const mapStateToProps = (state) =>{
@@ -107,6 +111,9 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
     return{
+        checkInfo(){
+            dispatch(actionCreators1.checkUser())
+        },
         getLogin(index){
             if(index===1){
                 dispatch(actionCreators1.loginShow(true))

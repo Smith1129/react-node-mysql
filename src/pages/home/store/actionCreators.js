@@ -1,5 +1,5 @@
 import {constants} from './index'
-import {homeList} from '../../../api/http'
+import {homeList,upOrlike} from '../../../api/http'
 import axios from 'axios'
 export const getHomeList = ()=>{
         return (dispatch)=> {
@@ -14,9 +14,15 @@ export const getHomeList = ()=>{
 }
 export const getUpList = ()=>{
         return (dispatch)=> {
+                const payload = {isAll:true}
                 return new Promise((reject,resolve)=>{
-                        homeList().then((res)=>{
-                      dispatch(initTHomeList(res.Data))
+                 upOrlike(payload).then((res)=>{
+                //       if(res.Data.length>0){
+                        dispatch({
+                                type:'setUpList',
+                                value:res.Data
+                        })
+                //       }
                     }).catch(error => {
                         reject(error)
                     })

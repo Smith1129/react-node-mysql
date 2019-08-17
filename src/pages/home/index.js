@@ -29,8 +29,11 @@ class Home extends Component{
         )
     }
     componentDidMount() {
-        // this.props.getHomeData()
+        this.props.getHomeData()
         this.bindEvents()
+        if(this.props.userInfo){
+            this.props.UpListInfo()
+        }
     }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.props.changeScrollShow);
@@ -43,7 +46,8 @@ class Home extends Component{
 //连接方式
 const mapStateToProps = (state) =>{            //state是指store里的数据
     return{
-        scrollShow:state.home.scrollShow      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+        scrollShow:state.home.scrollShow,     //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
+        userInfo:state.login.userInfo
     }
 }
 //对store里的数据做修改
@@ -51,6 +55,9 @@ const mapDispatchToProps = (dispatch) =>{   //将store.dispatch方法挂载到di
     return{
         getHomeData(){
             dispatch(actionCreators.getHomeList())
+        },
+        UpListInfo(){
+            dispatch(actionCreators.getUpList())
         },
         changeScrollShow(){
             if(document.documentElement.scrollTop > 100)

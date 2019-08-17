@@ -4,6 +4,7 @@ const defaultState = {
     ArticleList:[],
     recommendList:[],
     scrollShow:false,
+    UpList:[]
 }
 export default (state = defaultState,action) => {
     switch (action.type) {
@@ -21,6 +22,11 @@ export default (state = defaultState,action) => {
             const newState3 = JSON.parse(JSON.stringify(state));
             newState3.scrollShow = action.value
             return newState3
+        case 'setUpList':
+            console.log(action.value)
+            const newState4 = JSON.parse(JSON.stringify(state));
+            newState4.UpList = action.value
+            return newState4
         default:
             return state
     }

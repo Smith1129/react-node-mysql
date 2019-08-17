@@ -10,6 +10,18 @@ export const registerShow = (data) => {
         dispatch({ type:'registerShow',value:data})
   }
 }
+export const checkUser = () => {
+    return(dispatch) => {
+        const payload = {check:true}
+        return new Promise((reject,resolve)=>{
+            loginInfo(payload).then((res)=>{
+                dispatch({type:'setUserInfo',value:res.Data})
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    }
+}
 export const UserInfo = (data) => {
         return(dispatch) => {
                 const payload = data

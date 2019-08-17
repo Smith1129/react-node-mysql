@@ -4,19 +4,33 @@ import {connect} from 'react-redux'
 import { actionCreators } from '../store'
 // import {Link} from 'react-router-dom'
 import {upOrlike} from '../../../api/http'
+import * as equal from '../../../util/isEqual'
 
 class List extends Component{
     constructor(props)
     {
         super(props)
         this.state = {
-            isUp:false,
-            isVote:false,
-            arr:['hello','dddd']
+            // isUp:false,
+            // isVote:false,
+            // arr:['hello','dddd']
         }
         
     }
+    shouldComponentUpdate(nextProps,nextState){
+        console.log(this.props)
+        console.log(nextProps)
+        let isEqual = equal.diff(this.props.upList,nextProps.upList)
+        let isEqual1 = equal.diff(this.props.articleList,nextProps.articleList)
+        console.log(isEqual,isEqual1)
+        if(isEqual && isEqual1){
+            return false
+        }else{
+            return true
+        }
+    }
     render() {
+        console.log(this.props.upList)
         return(
         <div>
             {this.props.articleList.map((item,index)=>{
@@ -29,7 +43,9 @@ class List extends Component{
                             <p className='desc'>{item.desc}</p>
                             {/* {item.articleUp?(<span className="iconfont">&#xe682;<em>{item.articleUp}</em></span>):(<span className="iconfont">&#xe682;<em>0</em></span>)} */}
                             
-                            <span className={this.state.isUp?'iconfont up':'iconfont'} onClick={()=>this.handleUp(item.id)}>&#xe627;</span>
+                            <span className={this.props.upList.indexOf(item.id) !== -1?'iconfont up':'iconfont'} onClick={()=>this.handleUp(item.id)}>&#xe627;
+                                <em>{item.articleUp?item.articleUp:0}</em>
+                            </span>
                             {/* &#xe627; */}
                             <span className="iconfont">&#xe61d;</span>
                             {/* &#xe608; */}
@@ -46,17 +62,15 @@ class List extends Component{
     handleUp(id){
         if(this.props.userInfo)
         {
-            this.setState({
-                isUp:!(this.state.isUp)
-            })
             return new Promise((reject,resolve)=>{
                 const payload = {
                     id:id,
                     type:'up'
                 }
                 upOrlike(payload).then((res)=>{
+                    this.props.UpListInfo()
                 }).catch(error=>{
-                        reject(error)
+                    reject(error)
                 })
             })
         }else{
@@ -67,7 +81,8 @@ class List extends Component{
 const mapStateToProps = (state) =>{            //state是指store里的数据
     return{
         articleList:state.home.ArticleList,      //将store里的inputValue映射到inputValue,此时组件取值要用this.props.inputValue
-        userInfo:state.login.userInfo
+        userInfo:state.login.userInfo,
+        upList:state.home.UpList
     }
 }
 
@@ -81,6 +96,9 @@ const mapDispatchToProps = (dispatch) =>{
                 type:'loginshow',
                 value:value
             })
+        },
+        UpListInfo(){
+            dispatch(actionCreators.getUpList())
         }
     }
 }
