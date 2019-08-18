@@ -31,10 +31,8 @@ class Home extends Component{
     componentDidMount() {
         this.props.getHomeData()
         this.bindEvents()
-        if(this.props.userInfo){
-            this.props.UpListInfo()
-        }
     }
+    
     componentWillUnmount() {
         window.removeEventListener('scroll', this.props.changeScrollShow);
     }
@@ -55,9 +53,6 @@ const mapDispatchToProps = (dispatch) =>{   //将store.dispatch方法挂载到di
     return{
         getHomeData(){
             dispatch(actionCreators.getHomeList())
-        },
-        UpListInfo(){
-            dispatch(actionCreators.getUpList())
         },
         changeScrollShow(){
             if(document.documentElement.scrollTop > 100)

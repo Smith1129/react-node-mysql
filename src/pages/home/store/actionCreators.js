@@ -17,12 +17,10 @@ export const getUpList = ()=>{
                 const payload = {isAll:true}
                 return new Promise((reject,resolve)=>{
                  upOrlike(payload).then((res)=>{
-                //       if(res.Data.length>0){
                         dispatch({
                                 type:'setUpList',
                                 value:res.Data
                         })
-                //       }
                     }).catch(error => {
                         reject(error)
                     })

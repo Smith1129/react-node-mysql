@@ -23,7 +23,6 @@ export default (state = defaultState,action) => {
             newState3.scrollShow = action.value
             return newState3
         case 'setUpList':
-            console.log(action.value)
             const newState4 = JSON.parse(JSON.stringify(state));
             newState4.UpList = action.value
             return newState4

@@ -7,34 +7,23 @@ import {upOrlike} from '../../../api/http'
 import * as equal from '../../../util/isEqual'
 
 class List extends Component{
-    constructor(props)
-    {
-        super(props)
-        this.state = {
-            // isUp:false,
-            // isVote:false,
-            // arr:['hello','dddd']
-        }
-        
-    }
     shouldComponentUpdate(nextProps,nextState){
-        console.log(this.props)
-        console.log(nextProps)
         let isEqual = equal.diff(this.props.upList,nextProps.upList)
         let isEqual1 = equal.diff(this.props.articleList,nextProps.articleList)
-        console.log(isEqual,isEqual1)
-        if(isEqual && isEqual1){
+        let isEqual2 = equal.diff(this.props.userInfo,nextProps.userInfo)
+        if(isEqual && isEqual1 && isEqual2){
             return false
         }else{
+            this.props.UpListInfo()
             return true
         }
     }
     render() {
-        console.log(this.props.upList)
         return(
         <div>
             {this.props.articleList.map((item,index)=>{
                 return(
+                    
                     // <Link key={index} to={'/detail/'+item.id}>
                     <ListItem key={index}>
                         <img className='pic' src={item.imgUrl}alt=''/>
@@ -69,6 +58,7 @@ class List extends Component{
                 }
                 upOrlike(payload).then((res)=>{
                     this.props.UpListInfo()
+                    this.props.getHomeData()
                 }).catch(error=>{
                     reject(error)
                 })
@@ -88,6 +78,9 @@ const mapStateToProps = (state) =>{            //state是指store里的数据
 
 const mapDispatchToProps = (dispatch) =>{
     return{
+        getHomeData(){
+            dispatch(actionCreators.getHomeList())
+        },
         handleLoadMore(){
             dispatch(actionCreators.loadMore())
         },

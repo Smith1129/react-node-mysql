@@ -5,6 +5,14 @@ export const loginShow = (data)=>{
                dispatch({ type:'loginshow',value:data})
         }
 }
+export const removeInfo = () => {
+    return (dispatch) =>{
+        localStorage.removeItem('token')
+        dispatch({
+            type:'removeInfo'
+        })
+    }
+}
 export const registerShow = (data) => {
     return (dispatch) =>{
         dispatch({ type:'registerShow',value:data})

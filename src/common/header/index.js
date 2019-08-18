@@ -6,18 +6,24 @@ import {actionCreators} from './store'
 import {Link} from 'react-router-dom'
 import  * as actionCreators1 from '../login/store/actionCreators'
 import { Menu, Dropdown } from 'antd'
-const menu = (
-    <Menu>
-      <Menu.Item>
-      <Link to='/userInfo'>
-          设置
-      </Link>
-      </Menu.Item>
-    </Menu>
-  );
+//   function handleExit(props) {
+//       console.log(props)
+//       console.log(this)
+//   }
 class Header extends Component{
     render() {
-        console.log(this.props.userInfo)
+        const menu = (
+            <Menu>
+              <Menu.Item>
+              <Link to='/userInfo'>
+                  设置
+              </Link>
+              </Menu.Item>
+              <Menu.Item onClick={()=>this.props.handleExit()}>
+                  退出登陆
+              </Menu.Item>
+            </Menu>
+          )
         return(
             <HeaderWrapper>
                 <Link to='/'>
@@ -58,8 +64,7 @@ class Header extends Component{
             </HeaderWrapper>
         )
     }
-    
-   
+
     getListArea(show)
     {
      const pageList = []
@@ -111,6 +116,9 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
     return{
+        handleExit(){
+            dispatch(actionCreators1.removeInfo())
+        },
         checkInfo(){
             dispatch(actionCreators1.checkUser())
         },

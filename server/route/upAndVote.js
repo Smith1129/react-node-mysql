@@ -17,7 +17,6 @@ router.get('/api/upOrVote', function (req, res) {
                 }
                 res.send(response)
             }else{
-                console.log(results)
                 const newData = results.map((item)=>{
                     return item.article_id
                 })
@@ -43,6 +42,8 @@ router.get('/api/upOrVote', function (req, res) {
             const sqlSearch = 'SELECT id FROM articleup where from_username=?'
             const sqlInsert = 'Insert into articleup(from_username,article_id) values (?,?)'
             const sqlDel = 'DELETE from articleup where from_username=? AND article_id=?'
+            const sqladd = 'Update article set vote=vote+1 where id=?'
+            const numberdel = 'Update article set vote=vote-1 where id=?'
             let type = req.query.type
             let articleId = req.query.id
             if(type === 'up'){
@@ -50,23 +51,28 @@ router.get('/api/upOrVote', function (req, res) {
                 let response
                 if(results.length==0){
                     mysql.connect(sqlInsert,[tokenVerify,articleId],function (results) {
-                        response = {
-                            Code:200,
-                            Data:{
-                                Msg:'插入成功'
+                        mysql.connect(sqladd,[articleId],function (results) {
+                            response = {
+                                Code:200,
+                                Data:{
+                                    Msg:'操作成功'
+                                }
                             }
-                        }
-                        res.send(response);
+                            res.send(response);
+                        })
+                        
                     })
                 }else{
                     mysql.connect(sqlDel,[tokenVerify,articleId],function (results) {
-                        response = {
-                            Code:200,
-                            Data:{
-                                Msg:'取消成功'
+                        mysql.connect(numberdel,[articleId],function (results) {
+                            response = {
+                                Code:200,
+                                Data:{
+                                    Msg:'取消成功'
+                                }
                             }
-                        }
-                        res.send(response);
+                            res.send(response);
+                        })
                     })
                 }
                 

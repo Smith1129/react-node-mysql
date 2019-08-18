@@ -23,6 +23,10 @@ export default (state = defaultState,action) => {
             registerState.isRegister = action.value
             registerState.isLogin = !(action.value)
             return registerState
+        case 'removeInfo':
+            const removeState = JSON.parse(JSON.stringify(state))
+            removeState.userInfo = ''
+            return removeState
         default:
             return state
     }
